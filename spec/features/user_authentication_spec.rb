@@ -12,7 +12,6 @@ RSpec.feature "User", type: :feature do
   context "/sign_in" do
   scenario "After signing out, I'm forward" do
     sign_up
-    p page.body
     click_link 'Logout'
     expect(current_path).to eq "/"
   end
