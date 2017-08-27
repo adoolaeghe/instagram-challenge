@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :like]
 
   def create
     @post = current_user.posts.build(post_params)
@@ -16,6 +16,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.reverse_order
+    @like = Like.new
   end
 
   def show
@@ -46,6 +47,15 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def like
+    if @post.liked_by current_user
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js
+    end
     end
   end
 
