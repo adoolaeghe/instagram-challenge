@@ -2,15 +2,22 @@
 
 <h1>Posts</h1>
 
-
     <% @posts.each do |post| %>
+
       <tr>
         <td><%= post.user.user_name  %></td>
         <td><%= image_tag post.image.url(:medium) %></td>
         <td><%= link_to post.posted_at, post_path(post) %></td>
+        <% if post.user.id == current_user.id %>
         <td><%= link_to 'Show', post %></td>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% else %>
+        <td><%= link_to 'Show', post %></td>
+        <% end %>
+        <%= form_for [post, post.comments.new] do |f|%>
+        <%= f.text_field :content, placeholder: 'Add a comment...'%>
+        <% end %>
       </tr>
       <% end %>
 

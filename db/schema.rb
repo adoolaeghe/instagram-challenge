@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170827123919) do
+ActiveRecord::Schema.define(version: 20170827142042) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 20170827123919) do
     t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
     t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "post_id"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "models", force: :cascade do |t|
